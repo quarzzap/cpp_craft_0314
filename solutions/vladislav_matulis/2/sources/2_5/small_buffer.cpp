@@ -61,7 +61,7 @@ int main()
 			boost::uint32_t bType = buf.type();
 			types[ bType ].memory -= size( buf );
 			types[ bType ].typeCount++;
-			if ( !types[ bType ].was )
+			if ( !( types[ bType ].was ) )
 			{
 				types[ bType ].timeCount++;
 				types[ bType ].was = true;
