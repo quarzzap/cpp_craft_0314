@@ -25,7 +25,7 @@ struct typeInfo
 	{}
 };
 
-typedef std::map< uint32_t, typeInfo > Map;
+typedef std::map< boost::uint32_t, typeInfo > Map;
 
 int main()
 {
