@@ -7,9 +7,10 @@ namespace consts
 }
 
 inline boost::uint32_t size( binary_reader::market_message &mess )
-{
+
+ {
 	return static_cast< boost::uint32_t > ( sizeof( mess.type() ) + sizeof( mess.time() ) + sizeof( *(mess.msg() ) ) + sizeof( static_cast< boost::uint32_t > ( strlen( mess.msg() ) + 1 ) ) );
-}
+ }
 
 struct typeInfo
 {

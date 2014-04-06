@@ -35,6 +35,21 @@ binary_reader::stock_data::stock_data( const char* stock_name,
 	memcpy( stock_name_, stock_name, sizeof( stock_name_ ) );
 	memcpy( date_time_, date_time, sizeof( date_time_ ) );
 }
+
+binary_reader::stock_data::stock_data( const binary_reader::stock_data &datum )
+	: price_( datum.price_ )
+	, vwap_( datum.vwap_ )
+	, volume_( datum.volume_ )
+	, f1_( datum.f1_ )
+	, t1_( datum.t1_ )
+	, f2_( datum.f2_ )
+	, f3_( datum.f3_ )
+	, f4_( datum.f4_ )
+{
+	memcpy( stock_name_, datum.stock_name_, sizeof( stock_name_ ) );
+	memcpy( date_time_, datum.date_time_, sizeof( date_time_ ) );
+}
+
 binary_reader::stock_data::~stock_data()
 {
 }
@@ -68,3 +83,53 @@ void binary_reader::stock_data::write_raw( std::ofstream& out )
 	write_binary( out, f3_ );
 	write_binary( out, f4_ );	
 }
+
+		const char* binary_reader::stock_data::stock_name()const
+		{
+			return stock_name_;
+		}
+
+		const char* binary_reader::stock_data::date_time()const
+		{
+			return date_time_;
+		}
+
+		double binary_reader::stock_data::price()const
+		{
+			return price_;
+		}
+
+		double binary_reader::stock_data::vwap()const
+		{
+			return vwap_;
+		}
+
+		boost::uint32_t binary_reader::stock_data::volume()const
+		{
+			return volume_;
+		}
+
+		double binary_reader::stock_data::f1()const
+		{
+			return f1_;
+		}
+
+		double binary_reader::stock_data::t1()const
+		{
+			return t1_;
+		}
+
+		double binary_reader::stock_data::f2()const
+		{
+			return f2_;
+		}
+
+		double binary_reader::stock_data::f3()const
+		{
+			return f3_;
+		}
+
+		double binary_reader::stock_data::f4()const
+		{
+			return f4_;
+		}
