@@ -15,14 +15,14 @@ binary_reader::market_message::market_message( const boost::uint32_t type, const
 , time_( time )
 {
 	len_ = static_cast< boost::uint32_t >( strlen( msg ) );
-	msg_ = new char[ len_ ];
-	memcpy( msg_, msg, len_ );
+	msg_ = new char[ len_ + 1 ];
+	memcpy( msg_, msg, len_ + 1 );
 }
-void binary_reader::market_message::write( std::ofstream& out )
+void binary_reader::market_message::write( std::ofstream& out )const
 {
-	out.write( reinterpret_cast< char* >( &type_ ), sizeof( type_ ) );
-	out.write( reinterpret_cast< char* >( &time_ ), sizeof( time_ ) );
-	out.write( reinterpret_cast< char* >( &len_ ), sizeof( len_ ) );
+	out.write( reinterpret_cast< const char* >( &type_ ), sizeof( type_ ) );
+	out.write( reinterpret_cast< const char* >( &time_ ), sizeof( time_ ) );
+	out.write( reinterpret_cast< const char* >( &len_ ), sizeof( len_ ) );
 	out.write( msg_, len_ );
 }
 

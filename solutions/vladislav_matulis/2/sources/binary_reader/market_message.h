@@ -18,7 +18,7 @@ namespace binary_reader
 	public:
 		explicit market_message( std::ifstream& in );
 		explicit market_message( const boost::uint32_t type, const boost::uint32_t time, const char* const msg );
-		void write( std::ofstream& out );
+		void write( std::ofstream& out )const;
 		~market_message();
 		//
 		boost::uint32_t type() const;
