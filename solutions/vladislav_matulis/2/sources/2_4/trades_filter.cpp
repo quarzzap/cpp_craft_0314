@@ -23,8 +23,10 @@ int main()
 		if ( in.eof() )
 			break;
 		curTime = ( msg.time() > curTime ) ? msg.time() : curTime;
-		if ( check( msg.type() ) && msg.time() + consts::TIMEDEF <= curTime )
+		if ( check( msg.type() ) && ( msg.time() + consts::TIMEDEF > curTime ) )
+		{
 			msg.write( out );
+		}
 	}
 	in.close();
 	out.close();
