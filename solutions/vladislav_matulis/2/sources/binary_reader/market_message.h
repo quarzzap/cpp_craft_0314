@@ -24,6 +24,7 @@ namespace binary_reader
 		boost::uint32_t type() const;
 		boost::uint32_t time() const;
 		const char* const msg() const;
+		boost::uint32_t size() const;
 	};
 }
 
