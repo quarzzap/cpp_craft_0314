@@ -8,8 +8,7 @@ binary_reader::market_message::market_message( std::ifstream& in )
 	in.read( reinterpret_cast< char* >( &time_ ), sizeof( time_ ) );
 	in.read( reinterpret_cast< char* >( &len_ ), sizeof( len_ ) );
 	msg_ = new char[ len_ ];
-	memset( msg_, 0, len_ );
-	in.read( msg_, len_ );
+	in.read( reinterpret_cast< char* >( msg_ ), len_ );
 }
 binary_reader::market_message::market_message( const boost::uint32_t type, const boost::uint32_t time, const char* const msg )
 : type_ ( type )
@@ -18,7 +17,7 @@ binary_reader::market_message::market_message( const boost::uint32_t type, const
 	len_ = static_cast< boost::uint32_t >( strlen( msg ) );
 	msg_ = new char[ len_ + 1 ];
 	memset( msg_, 0, len_ + 1 );
-	memcpy( msg_, msg, len_ + 1);
+	memcpy( msg_, msg, len_ );
 }
 void binary_reader::market_message::write( std::ofstream& out )const
 {
@@ -44,4 +43,9 @@ boost::uint32_t binary_reader::market_message::time() const
 const char* const binary_reader::market_message::msg() const
 {
 	return msg_;
+}
+
+boost::uint32_t binary_reader::market_message::size() const
+{
+	return 12 + len_;
 }
