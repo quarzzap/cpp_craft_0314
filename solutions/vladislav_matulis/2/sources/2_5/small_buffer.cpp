@@ -7,12 +7,6 @@ namespace consts
 	const size_t intSize = sizeof( boost::uint32_t );
 }
 
-inline boost::uint32_t size( binary_reader::market_message &mess )
-
- {
-	 return static_cast< boost::uint32_t > ( 3*consts::intSize + sizeof( *(mess.msg() ) ) );
- }
-
 struct typeInfo
 {
 	boost::uint32_t typeCount;
@@ -40,7 +34,6 @@ int main()
 	bool firstStep = true;
 	while ( !in.eof() )
 	{
-
 		binary_reader::market_message buf( in );
 		if ( in.eof() )
 			break;
@@ -58,10 +51,10 @@ int main()
 			}
 			current = buf.time();
 		}
-		if ( size( buf ) <= types[ buf.type() ].memory )
+		if ( buf.size() <= types[ buf.type() ].memory )
 		{
 			boost::uint32_t bType = buf.type();
-			types[ bType ].memory -= size( buf );
+			types[ bType ].memory -= buf.size();
 			types[ bType ].typeCount++;
 			if ( !( types[ bType ].was ) )
 			{
@@ -75,7 +68,11 @@ int main()
 	{
 		if ( !out.write( reinterpret_cast< const char * > ( &( i->first ) ), sizeof( i->first ) ) )
 			return 1;
-		boost::uint32_t aver = i->second.typeCount / i->second.timeCount;
+		boost::uint32_t aver;
+		if ( i->second.timeCount )
+			aver = i->second.typeCount / i->second.timeCount;
+		else
+			aver = 0;
 		if ( !out.write( reinterpret_cast< char * > ( &( aver ) ), sizeof( aver ) ) )
 			return 1;
 	}
